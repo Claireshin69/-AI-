@@ -1,0 +1,496 @@
+/* Fortune Result Modal, Card Paper Slip, History Drawer, Custom Maker & Toast */
+
+/* Fortune Result Card Modal */
+.result-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.result-modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(3, 7, 18, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.result-card-container {
+  position: relative;
+  z-index: 101;
+  max-width: 580px;
+  width: 100%;
+  animation: cardUnroll 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cardUnroll {
+  0% { transform: scale(0.6) rotateX(45deg); opacity: 0; }
+  100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+}
+
+.fortune-slip-paper {
+  background: var(--color-paper);
+  color: #1F2937;
+  padding: 32px 36px;
+  border-radius: 12px;
+  border: 2px solid #FEF3C7;
+  box-shadow: 
+    0 20px 40px rgba(0,0,0,0.5),
+    inset 0 0 40px rgba(245, 158, 11, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Red Decorative Inner Border */
+.fortune-slip-paper::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 2px dashed rgba(220, 38, 38, 0.35);
+  pointer-events: none;
+  border-radius: 6px;
+}
+
+.stamp-mark {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-family: var(--font-accent);
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: rgba(220, 38, 38, 0.15);
+  border: 2px solid rgba(220, 38, 38, 0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+  transform: rotate(12deg);
+}
+
+.slip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.slip-tag {
+  background: #FEE2E2;
+  color: #991B1B;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.slip-date {
+  font-size: 0.8rem;
+  color: #6B7280;
+  font-family: var(--font-accent);
+}
+
+.quote-content {
+  position: relative;
+  text-align: center;
+  margin: 20px 0 12px;
+  padding: 0 20px;
+}
+
+.quote-mark {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: #F59E0B;
+  position: absolute;
+}
+.text-left { top: -20px; left: -10px; }
+.text-right { bottom: -30px; right: -10px; }
+
+.quote-main-text {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.quote-author {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #7C2D12;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.quote-english {
+  text-align: center;
+  font-family: var(--font-accent);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #6B7280;
+  margin-bottom: 20px;
+}
+
+.slip-divider {
+  border: none;
+  border-top: 1px solid #E5E7EB;
+  margin: 16px 0;
+}
+
+/* Luck Stats Grid */
+.fortune-stats {
+  background: #FFF;
+  border: 1px solid #F3F4F6;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.total-luck-meter {
+  margin-bottom: 14px;
+}
+
+.meter-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.meter-label strong {
+  color: #D97706;
+}
+
+.meter-bar-track {
+  height: 8px;
+  background: #E5E7EB;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.meter-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F59E0B, #EF4444);
+  border-radius: 4px;
+  transition: width 1s ease-out;
+}
+
+.scores-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-size: 0.82rem;
+  margin-bottom: 16px;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score-stars {
+  color: #F59E0B;
+  letter-spacing: 2px;
+}
+
+.lucky-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed #E5E7EB;
+  padding-top: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.lucky-title {
+  display: block;
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-bottom: 4px;
+}
+
+.number-balls {
+  display: flex;
+  gap: 6px;
+}
+
+.number-balls .ball {
+  width: 26px;
+  height: 26px;
+  background: #FEF3C7;
+  color: #92400E;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-accent);
+}
+
+.color-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Action buttons */
+.slip-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #D1D5DB;
+  background: #F9FAFB;
+  color: #374151;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: #F3F4F6;
+  border-color: #9CA3AF;
+}
+
+.primary-action {
+  background: #111827;
+  color: #FDE68A;
+  border-color: #111827;
+}
+
+.primary-action:hover {
+  background: #1F2937;
+  border-color: #1F2937;
+}
+
+/* History Drawer & Custom Modals */
+.drawer-overlay, .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.drawer-overlay.hidden, .modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.drawer-content {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background: #111827;
+  border-left: 1px solid var(--color-glass-border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.drawer-header, .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+.close-btn:hover { color: #FFF; }
+
+.drawer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #9CA3AF;
+  margin-bottom: 16px;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.danger-text { color: #EF4444; }
+.danger-text:hover { text-decoration: underline; }
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 4px;
+}
+
+.history-card {
+  background: rgba(31, 41, 55, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 14px 16px;
+  position: relative;
+}
+
+.history-card .h-date {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  margin-bottom: 6px;
+}
+
+.history-card .h-quote {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: #F9FAFB;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.history-card .h-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #F59E0B;
+}
+
+.h-del-btn {
+  background: none;
+  border: none;
+  color: #6B7280;
+  cursor: pointer;
+}
+.h-del-btn:hover { color: #EF4444; }
+
+/* Custom Modal */
+.modal-overlay {
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: #1F2937;
+  border: 1px solid var(--color-glass-border);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 480px;
+  width: 100%;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-form label {
+  font-size: 0.88rem;
+  color: #D1D5DB;
+}
+
+.modal-form textarea, .modal-form input {
+  background: #111827;
+  border: 1px solid #374151;
+  color: #FFF;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+}
+
+.submit-btn {
+  justify-content: center;
+  margin-top: 10px;
+  padding: 14px;
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10B981;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  z-index: 300;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.hidden {
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  pointer-events: none;
+}
+
+/* Responsive Modal Adjustments */
+@media (max-width: 640px) {
+  .fortune-slip-paper {
+    padding: 24px 20px;
+  }
+  .scores-grid {
+    grid-template-columns: 1fr;
+  }
+  .slip-actions {
+    flex-direction: column;
+  }
+}

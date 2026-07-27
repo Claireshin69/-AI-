@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="cookieGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="50%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#92400E" />
+    </linearGradient>
+    <filter id="shadowRight">
+      <feDropShadow dx="4" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Cookie Outer Fold Right -->
+  <path d="M 100 25 C 103 95 105 140 102 185 C 145 185 185 160 185 115 C 185 65 150 25 100 25 Z" fill="url(#cookieGradRight)" filter="url(#shadowRight)"/>
+  <!-- Cookie Ridge & Highlight Right -->
+  <path d="M 170 90 C 145 125 125 150 105 178" stroke="#FEF08A" stroke-width="4" stroke-linecap="round" opacity="0.4" fill="none"/>
+  <path d="M 140 45 C 120 80 110 120 104 175" stroke="#78350F" stroke-width="3" stroke-linecap="round" opacity="0.3" fill="none"/>
+</svg>

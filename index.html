@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>맘별 AI 자기이해 미니리포트 | 나를 이해하는 별자리 지도</title>
+  <meta name="description" content="AI 질문을 통해 현재 감정, 강점, 관계, 4원소 분석을 정리하고 나만의 15페이지 PDF 리포트를 생성하세요.">
+  <link rel="stylesheet" href="/src/css/style.css">
+  <link rel="stylesheet" href="/src/css/questions.css">
+  <link rel="stylesheet" href="/src/css/report.css">
+</head>
+<body>
+
+  <!-- 글로벌 헤더 & 글자 크기 조절 컨트롤 -->
+  <header class="header-bar">
+    <div class="brand-logo">
+      <div class="brand-logo-icon">⭐</div>
+      <span>맘별 AI</span> 자기이해 리포트
+    </div>
+    <div class="senior-accessibility-controls">
+      <span class="control-label">글자 크기:</span>
+      <button class="btn-font-toggle active" id="btn-font-sm">보통</button>
+      <button class="btn-font-toggle" id="btn-font-md">크게</button>
+      <button class="btn-font-toggle" id="btn-font-lg">더크게</button>
+    </div>
+  </header>
+
+  <main class="app-container">
+
+    <!-- 1. 랜딩 메인 화면 -->
+    <section id="view-landing" class="view-section active">
+      <div class="hero-section">
+        <div class="hero-slogan-badge">
+          <span>✨ 40~70세를 위한 따뜻한 AI 자기이해</span>
+          <span class="popo-badge">⭐ 포포와 함께</span>
+        </div>
+        <h1 class="hero-title">
+          "별은 미래를 맞추는 것이 아니라<br>
+          <span class="highlight">나를 이해하는 지도입니다"</span>
+        </h1>
+        <p class="hero-desc">
+          내 마음을 설명하기 어려우셨나요? 맘별 AI와 수호 캐릭터 <strong>포포(Popo)</strong>의 12가지 질문에 답해보세요.<br>
+          현재 감정, 내면의 강점, 관계 패턴, 4원소를 한눈에 담은 **15페이지 PDF 미니리포트**를 완성해 드립니다.
+        </p>
+
+        <!-- AI 클레어 캐릭터 안내 카드 -->
+        <div class="character-guide-box">
+          <div class="character-avatar">👩‍🏫</div>
+          <div class="character-content">
+            <div class="character-name">AI 클레어 (Claire)</div>
+            <div class="character-message">
+              "반갑습니다! 편안한 마음으로 12개 질문을 천천히 읽어보세요. 정답은 없으니 떠오르는 느낌 그대로 선택해주시면 됩니다."
+            </div>
+          </div>
+        </div>
+
+        <div class="value-grid">
+          <div class="value-item">
+            <div class="value-icon">🌤️</div>
+            <h3>오늘의 마음 상태</h3>
+            <p>내 마음의 날씨와 에너지 충전도를 정밀하게 확인합니다.</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">💎</div>
+            <h3>빛나는 3대 강점</h3>
+            <p>수많은 나날들을 견뎌온 내 안의 소중한 보석을 발굴합니다.</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🤝</div>
+            <h3>관계 & 소통 패턴</h3>
+            <p>가족과 지인들에게 따뜻함을 전달하는 소통 지혜를 얻습니다.</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🏮</div>
+            <h3>4원소 & 실천 제안</h3>
+            <p>불·물·공기·흙 에너지 밸런스와 오늘 실천할 3가지 방향.</p>
+          </div>
+        </div>
+
+        <button id="btn-start-app" class="btn-cta">
+          <span>나만의 자기이해 리포트 시작하기</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. 프로필 설정 화면 -->
+    <section id="view-profile" class="view-section">
+      <div class="card">
+        <!-- AI 클레어 안내 -->
+        <div class="character-guide-box" style="margin-bottom: 24px;">
+          <div class="character-avatar">👩‍🏫</div>
+          <div class="character-content">
+            <div class="character-name">AI 클레어</div>
+            <div class="character-message">
+              "리포트에 들어갈 편안한 닉네임이나 성함을 알려주세요. 정성껏 마음 지도를 작성해 드릴게요."
+            </div>
+          </div>
+        </div>
+
+        <h2 class="question-title">기본 정보를 입력해주세요</h2>
+        <p class="question-subtitle">나에게 꼭 맞는 진단 항목과 PDF 가이드가 생성됩니다.</p>
+        
+        <form id="profile-form">
+          <div class="form-group">
+            <label for="user-name">성함 또는 닉네임 *</label>
+            <input type="text" id="user-name" class="form-input" placeholder="예: 별빛마음, 김은희" required>
+          </div>
+
+          <div class="form-group">
+            <label for="user-age">연령대 *</label>
+            <select id="user-age" class="form-select" required>
+              <option value="40대">40대 (인생의 성숙기)</option>
+              <option value="50대" selected>50대 (제2의 인생 준비)</option>
+              <option value="60대">60대 (지혜와 여유의 시기)</option>
+              <option value="70대 이상">70대 이상 (빛나는 황금기)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="user-interest">가장 신경 쓰이는 관심 영역</label>
+            <select id="user-interest" class="form-select">
+              <option value="마음 정돈 및 감정 치유">마음 정돈 및 감정 치유</option>
+              <option value="가족 및 자녀와의 소통">가족 및 자녀와의 소통</option>
+              <option value="나의 강점 발견 및 자기개발">나의 강점 발견 및 자기개발</option>
+              <option value="제2의 인생 방향성 정립">제2의 인생 방향성 정립</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-cta">
+            <span>질문 작성 시작하기 (1/12)</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 3. 12개 질문 진단 화면 -->
+    <section id="view-question" class="view-section">
+      <!-- 진행 상황 표시 바 -->
+      <div class="progress-container">
+        <div class="progress-header">
+          <span id="progress-category">카테고리</span>
+          <span id="progress-step-text">1 / 12</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- 질문 카드 노드 -->
+      <div class="card" id="question-card-box">
+        <!-- JS 동적 주입 -->
+      </div>
+
+      <!-- 하단 탐색 버튼 -->
+      <div class="nav-buttons">
+        <button id="btn-prev-q" class="btn-secondary">← 이전 질문</button>
+        <button id="btn-next-q" class="btn-mint" style="width: auto; min-width: 180px;">다음 질문 →</button>
+      </div>
+    </section>
+
+    <!-- 4. AI 분석 로딩 화면 -->
+    <section id="view-loading" class="view-section" style="text-align: center; padding: 60px 20px;">
+      <div class="card">
+        <div class="star-constellation-icon" style="font-size: 3.5rem; animation: pulse 1.5s infinite alternate;">✨🌌⭐</div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-navy); margin: 20px 0 10px;">
+          맘별 AI가 마음의 별자리를 분석하고 있습니다
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 30px;" id="loading-status-text">
+          12개 답변과 4원소(불, 물, 공기, 흙) 에너지를 조합하고 있습니다...
+        </p>
+        <div class="meter-bar-outer" style="max-width: 440px; margin: 0 auto;">
+          <div id="loading-progress" class="meter-bar-inner" style="width: 0%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 결과 화면 (Result Screen Flow: 큰 제목 -> 오늘의 마음 -> 감정 카드 -> 강점 카드 -> 관계 카드 -> 실천 카드 -> PDF 다운로드) -->
+    <section id="view-report" class="view-section">
+
+      <!-- 1) 큰 제목 Header -->
+      <div class="card" style="text-align: center; background: linear-gradient(180deg, #FFFFFF 0%, #FAF6F0 100%);">
+        <span class="popo-badge" style="margin-bottom: 12px;">⭐ 맘별 AI 자기이해 분석 완료</span>
+        <h1 id="web-report-title" class="report-main-title" style="font-size: 2.2rem; margin-bottom: 12px;">
+          별빛마음 님의 마음을 비추는 맘별 AI 자기이해 리포트
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem;" id="web-report-subtitle">
+          나만의 감정, 내면의 강점, 관계 소통법, 3가지 실천 가이드와 15페이지 PDF를 만나보세요.
+        </p>
+      </div>
+
+      <!-- 2) 오늘의 마음 (Today's Mind) -->
+      <div class="card" id="web-card-today-heart">
+        <div class="question-category-badge">🌤️ 오늘의 마음</div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--text-navy);">
+          오늘의 마음 날씨: <span id="web-weather-title" style="color: var(--color-mint);">맑고 평온함</span>
+        </h2>
+        <p id="web-weather-desc" style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.05rem;">
+          마음이 비교적 온화하고 잔잔하여 스스로를 돌보기에 좋은 상태입니다.
+        </p>
+
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;">마음 에너지 충전도</h3>
+        <div class="meter-bar-outer">
+          <div id="web-energy-bar" class="meter-bar-inner" style="width: 75%;"></div>
+        </div>
+        <p style="font-size: 0.95rem; color: var(--text-muted); text-align: right; font-weight: 700; margin-top: 4px;">
+          현재 충전율: <span id="web-energy-val" style="color: var(--color-mint);">75%</span>
+        </p>
+      </div>
+
+      <!-- 3) ↓ 감정 카드 (Emotion Card) -->
+      <div class="card" id="web-card-emotion">
+        <div class="question-category-badge" style="background: var(--color-gold-light); color: #B87A30;">💧 감정 밸런스</div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--text-navy);">
+          내 안의 감정 소리와 솔직한 마음
+        </h2>
+        <p id="web-emotion-desc" style="font-size: 1.05rem; line-height: 1.8; color: var(--text-navy); margin-bottom: 20px;">
+          그동안 타인과 가족을 위해 애써온 마음이 깊게 자리 잡고 있습니다. 감정은 억누르는 대상이 아닌 자연스럽게 흐르는 물결과 같습니다.
+        </p>
+
+        <!-- AI 클레어 감정 한마디 -->
+        <div class="character-guide-box" style="margin-bottom: 0;">
+          <div class="character-avatar">👩‍🏫</div>
+          <div class="character-content">
+            <div class="character-name">AI 클레어의 따뜻한 조언</div>
+            <div id="web-claire-emotion-msg" class="character-message">
+              "답답할 때는 '내가 그동안 참 열심히 살아왔구나'하며 스스로의 어깨를 조용히 감싸주세요."
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4) ↓ 강점 카드 (Strength Card) -->
+      <div class="card" id="web-card-strength">
+        <div class="question-category-badge">💎 내면의 핵심 강점</div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; color: var(--text-navy);">
+          나를 지탱해온 3대 보석 같은 강점
+        </h2>
+
+        <div id="web-strengths-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <!-- JS 주입 -->
+        </div>
+
+        <div style="background: var(--color-gold-light); border: 1px solid rgba(217, 160, 91, 0.4); padding: 20px; border-radius: 16px;">
+          <h4 style="font-size: 1.05rem; font-weight: 800; color: #B87A30; margin-bottom: 6px;">💡 강점 스위치 켜기</h4>
+          <p style="font-size: 0.95rem; color: var(--text-navy);">어려운 순간마다 "과거에 지혜롭게 헤쳐 나왔듯 이번에도 잘 해낼 거야"라고 스스로에게 힘을 실어주세요.</p>
+        </div>
+      </div>
+
+      <!-- 5) ↓ 관계 카드 (Relationship Card) -->
+      <div class="card" id="web-card-relation">
+        <div class="question-category-badge" style="background: #EEF2FF; color: #4F46E5;">🤝 관계 & 소통 스타일</div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--text-navy);">
+          편안한 소통법 & 관계 솔루션
+        </h2>
+        <p id="web-relation-desc" style="font-size: 1.05rem; line-height: 1.8; color: var(--text-navy); margin-bottom: 20px;">
+          가족 및 대인관계에서 상처받지 않고 내 뜻을 부드럽게 전달하는 나-전달법(I-Message)을 추천합니다.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="background: #FEF2F2; border: 1px solid #FCA5A5; padding: 18px; border-radius: 14px; font-size: 0.95rem; color: #991B1B;">
+            <strong>❌ 피해야 할 대화:</strong><br>
+            "너는 왜 항상 너 생각만 하니?"
+          </div>
+          <div style="background: #ECFDF5; border: 1px solid #6EE7B7; padding: 18px; border-radius: 14px; font-size: 0.95rem; color: #065F46;">
+            <strong>⭕ 권장하는 나-전달법:</strong><br>
+            "네 말을 들으니 내 마음이 조금 서운했단다."
+          </div>
+        </div>
+      </div>
+
+      <!-- 6) ↓ 실천 카드 (Action Card) -->
+      <div class="card" id="web-card-action">
+        <div class="question-category-badge" style="background: var(--color-mint-light); color: var(--color-mint);">🏮 오늘부터 시작하는 실천</div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; color: var(--text-navy);">
+          나를 위한 3가지 작고 확실한 실천
+        </h2>
+
+        <div id="web-actions-container" style="display: flex; flex-direction: column; gap: 14px;">
+          <!-- JS 주입 -->
+        </div>
+      </div>
+
+      <!-- 7) ↓ PDF 다운로드 및 액션 버튼 -->
+      <div class="card" style="text-align: center; background: linear-gradient(180deg, #FFFFFF 0%, #F5F1E9 100%);">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--text-navy);">
+          📄 총 15페이지 분량의 PDF 리포트
+        </h2>
+        <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 28px;">
+          4원소 차트, 심층 분석, 수료증이 포함된 15페이지 완전판 PDF를 소장하세요.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; max-width: 500px; margin: 0 auto;">
+          <button id="btn-download-pdf" class="btn-cta">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>📥 PDF 15페이지 다운로드</span>
+          </button>
+          
+          <div style="display: flex; gap: 12px;">
+            <button id="btn-open-counsel-modal" class="btn-secondary" style="flex: 1;">
+              💬 1:1 상담 신청
+            </button>
+            <button id="btn-open-workshop-modal" class="btn-secondary" style="flex: 1;">
+              🎓 AI 워크숍 신청
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15페이지 리포트 PDF 미리보기 콘테이너 -->
+      <div style="margin-top: 40px; text-align: center;">
+        <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-navy); margin-bottom: 20px;">
+          📄 15페이지 PDF 문서 미리보기
+        </h3>
+        <div id="report-pages-container" class="report-preview-wrapper">
+          <!-- JS로 15페이지 HTML 동적 주입 -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- 1:1 상담 신청 모달 -->
+  <div id="modal-counsel" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close" id="close-counsel-modal">&times;</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+        <span style="font-size: 1.8rem;">💬</span>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-navy);">1:1 전문 상담 신청</h2>
+      </div>
+      <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 24px;">
+        완성된 15페이지 리포트를 바탕으로 전문 가이드와 따뜻하게 상담을 진행합니다.
+      </p>
+      <form id="counsel-form">
+        <div class="form-group">
+          <label>성함</label>
+          <input type="text" class="form-input" id="counsel-name" required>
+        </div>
+        <div class="form-group">
+          <label>연락처</label>
+          <input type="tel" class="form-input" id="counsel-phone" placeholder="010-0000-0000" required>
+        </div>
+        <div class="form-group">
+          <label>희망 상담 방식</label>
+          <select class="form-select" id="counsel-type">
+            <option value="대면 상담 (센터 방문)">대면 상담 (센터 방문)</option>
+            <option value="온라인 Zoom / 전화 상담">온라인 Zoom / 전화 상담</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-mint" style="width: 100%;">상담 신청 완료하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- AI 워크숍 신청 모달 -->
+  <div id="modal-workshop" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close" id="close-workshop-modal">&times;</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+        <span style="font-size: 1.8rem;">🎓</span>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-navy);">맘별 AI 강의 워크숍 신청</h2>
+      </div>
+      <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 24px;">
+        AI 활용법과 자기이해 노하우를 함께 배우는 4주 입문 과정입니다.
+      </p>
+      <form id="workshop-form">
+        <div class="form-group">
+          <label>성함</label>
+          <input type="text" class="form-input" id="workshop-name" required>
+        </div>
+        <div class="form-group">
+          <label>연락처</label>
+          <input type="tel" class="form-input" id="workshop-phone" placeholder="010-0000-0000" required>
+        </div>
+        <button type="submit" class="btn-mint" style="width: 100%;">강의 신청 접수하기</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

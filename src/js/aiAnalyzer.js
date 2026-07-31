@@ -1,6 +1,7 @@
 /**
  * 맘별AI 자기이해 미니리포트 - AI 심층 분석 및 문구 합성 엔진
  */
+import { generateGeminiStarlightLetter } from './geminiService.js';
 
 export function analyzeAnswers(profile, userAnswers) {
   // 1. 기본 4원소 에너지 점수 계산
@@ -161,3 +162,14 @@ ${profile.name}님의 제2의 인생 여정을 진심으로 응원합니다.
     generatedAt: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
   };
 }
+
+/**
+ * Gemini API를 활용한 비동기 분석 및 편지 합성 함수
+ */
+export async function analyzeAnswersAsync(profile, userAnswers) {
+  const result = analyzeAnswers(profile, userAnswers);
+  const geminiLetter = await generateGeminiStarlightLetter(profile, userAnswers, result.aiLetterText);
+  result.aiLetterText = geminiLetter;
+  return result;
+}
+

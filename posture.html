@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT 바른 자세 코치 - MediaPipe AI & Arduino Telemetry</title>
+  <meta name="description" content="MediaPipe AI 포즈 감지 및 아두이노 센서 기반 실시간 거북목/척추 자세 코칭 웹 애플리케이션">
+
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Design System CSS Stylesheets -->
+  <link rel="stylesheet" href="/src/css/posture-theme.css">
+  <link rel="stylesheet" href="/src/css/posture-components.css">
+</head>
+<body>
+
+  <!-- Header Component Slot -->
+  <div id="slot-header"></div>
+
+  <!-- Toast Notification Slot -->
+  <div id="toast-container" style="position: fixed; top: 80px; right: 20px; z-index: 999; display: flex; flex-direction: column; gap: 10px;"></div>
+
+  <!-- Dashboard Main Grid Layout -->
+  <main class="dashboard-grid">
+    <!-- 1. MediaPipe AI Webcam Camera Slot -->
+    <div class="col-4">
+      <div class="glass-card" style="text-align: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #fff;">
+            📷 MediaPipe AI 웹캠 감지
+          </h3>
+          <span class="status-badge good" id="webcam-status-tag" style="font-size: 0.75rem;">대기 중</span>
+        </div>
+
+        <div style="position: relative; width: 100%; height: 190px; border-radius: var(--border-radius-md); overflow: hidden; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-glass);">
+          <video id="webcam-video" style="display: none;" playsinline></video>
+          <canvas id="webcam-canvas" width="640" height="480" style="width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1);"></canvas>
+          
+          <div id="webcam-placeholder" style="position: absolute; top:0; left:0; width:100%; height:100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.85rem; padding: 1rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.25rem;">📷</div>
+            <div>'AI 웹캠 감지' 버튼을 눌러 카메라를 실행하세요.</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">카메라 거부 시 센서/시뮬레이터로 자동 전환됩니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Sensor Level Target Bubble Gauge -->
+    <div class="col-4" id="slot-level-gauge"></div>
+
+    <!-- 3. Real-time Posture Avatar (Tilting SVG Character) -->
+    <div class="col-4" id="slot-posture-avatar"></div>
+
+    <!-- 4. SVG Score Ring & Control Buttons -->
+    <div class="col-4" id="slot-score-card"></div>
+
+    <!-- 5. Real-time Telemetry Line Chart -->
+    <div class="col-8" id="slot-chart-card"></div>
+
+    <!-- 6. Habit Badges & 1-Minute Stretch Trigger Card -->
+    <div class="col-4" id="slot-badges-card"></div>
+  </main>
+
+  <!-- Stretching Modal Slot -->
+  <div id="slot-stretching-modal"></div>
+
+  <!-- Application Entry Script Module -->
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

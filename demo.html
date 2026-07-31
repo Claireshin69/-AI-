@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT 바른 자세 코치 - 컴포넌트 디자인 데모 (Demo)</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Component Stylesheets -->
+  <link rel="stylesheet" href="/src/css/posture-theme.css">
+  <link rel="stylesheet" href="/src/css/posture-components.css">
+
+  <style>
+    .demo-controls-panel {
+      background: rgba(6, 182, 212, 0.08);
+      border: 1px dashed var(--cyan-accent);
+      border-radius: var(--border-radius-md);
+      padding: 1.25rem;
+      margin: 1.5rem;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .demo-control-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .slider-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .slider-group input {
+      accent-color: var(--cyan-accent);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Header Component Slot -->
+  <div id="slot-header"></div>
+
+  <!-- Demo Control Toolbar -->
+  <div class="demo-controls-panel">
+    <div style="font-weight: 700; color: var(--cyan-accent); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+      🛠️ 컴포넌트 실시간 테스트 툴바 (Telemetry Interactive Sandbox)
+    </div>
+    <div class="demo-control-row">
+      <div class="slider-group">
+        <label style="font-size: 0.85rem; font-weight: 600;">Pitch (앞/뒤):</label>
+        <input type="range" id="slider-pitch" min="-30" max="30" value="3" step="0.5">
+        <span id="slider-pitch-val" class="num-font" style="font-weight: 700; color: #fff; min-width: 55px;">+3.0°</span>
+      </div>
+
+      <div class="slider-group">
+        <label style="font-size: 0.85rem; font-weight: 600;">Roll (좌/우):</label>
+        <input type="range" id="slider-roll" min="-30" max="30" value="-1" step="0.5">
+        <span id="slider-roll-val" class="num-font" style="font-weight: 700; color: #fff; min-width: 55px;">-1.0°</span>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-secondary" id="btn-preset-good" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+          😊 정상 (3°)
+        </button>
+        <button class="btn btn-secondary" id="btn-preset-warn" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+          😐 주의 (12°)
+        </button>
+        <button class="btn btn-danger" id="btn-preset-danger" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+          🚨 위험 (22°)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Grid Slot -->
+  <main class="dashboard-grid">
+    <!-- 2. Sensor Level Bubble Gauge -->
+    <div class="col-4" id="slot-level-gauge"></div>
+
+    <!-- 3. Real-time Posture Avatar -->
+    <div class="col-4" id="slot-posture-avatar"></div>
+
+    <!-- 4. Score Ring & Controls -->
+    <div class="col-4" id="slot-score-card"></div>
+
+    <!-- 5. Real-time Telemetry Line Chart -->
+    <div class="col-8" id="slot-chart-card"></div>
+
+    <!-- 6. Badges & Stretching Trigger -->
+    <div class="col-4" id="slot-badges-card"></div>
+  </main>
+
+  <!-- 7. Stretching Modal Slot -->
+  <div id="slot-stretching-modal"></div>
+
+  <!-- Component Logic Integration Script -->
+  <script type="module">
+    import { WebSerialManager } from '/src/js/components/WebSerialManager.js';
+    import { HeaderNav } from '/src/js/components/HeaderNav.js';
+    import { SensorLevelGauge } from '/src/js/components/SensorLevelGauge.js';
+    import { PostureAvatar } from '/src/js/components/PostureAvatar.js';
+    import { PostureScoreCard } from '/src/js/components/PostureScoreCard.js';
+    import { PostureChartCard } from '/src/js/components/PostureChartCard.js';
+    import { BadgesCard } from '/src/js/components/BadgesCard.js';
+    import { StretchingModal } from '/src/js/components/StretchingModal.js';
+
+    // State Variables
+    let currentPitch = 3.0;
+    let currentRoll = -1.0;
+    let badCountSecs = 0;
+
+    // Instantiate Components
+    const headerNav = new HeaderNav('slot-header', {
+      onConnectClick: () => serialManager.connect(),
+      onSimulateClick: () => {
+        if (serialManager.isSimulating) {
+          serialManager.stopSimulation();
+          headerNav.updateStatus(false, '시뮬레이터 중지됨');
+        } else {
+          serialManager.startSimulation();
+        }
+      }
+    });
+
+    const levelGauge = new SensorLevelGauge('slot-level-gauge');
+    const postureAvatar = new PostureAvatar('slot-posture-avatar');
+    const chartCard = new PostureChartCard('slot-chart-card');
+    const stretchModal = new StretchingModal('slot-stretching-modal');
+
+    const scoreCard = new PostureScoreCard('slot-score-card', {
+      onCalibrateClick: () => {
+        serialManager.calibrate(currentPitch, currentRoll);
+        alert(`🎯 기준점 영점 설정 완료! (Pitch: ${currentPitch.toFixed(1)}°, Roll: ${currentRoll.toFixed(1)}°)`);
+      },
+      onTestBuzzerClick: () => {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 880; // A5 tone
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
+        setTimeout(() => osc.stop(), 500);
+
+        // Flash screen alert
+        document.body.classList.add('alert-active');
+        setTimeout(() => document.body.classList.remove('alert-active'), 1200);
+      }
+    });
+
+    const badgesCard = new BadgesCard('slot-badges-card', {
+      onStartStretchClick: () => stretchModal.open()
+    });
+
+    // Initialize WebSerial Manager
+    const serialManager = new WebSerialManager(
+      (data) => {
+        // Stream Data Handler
+        currentPitch = data.pitch;
+        currentRoll = data.roll;
+
+        updateAllComponents(currentPitch, currentRoll);
+      },
+      (isConnected, statusText) => {
+        headerNav.updateStatus(isConnected, statusText);
+      }
+    );
+
+    // Core Component Telemetry Sync Function
+    function updateAllComponents(pitch, roll) {
+      const absPitch = Math.abs(pitch);
+      const absRoll = Math.abs(roll);
+
+      let status = 'good';
+      if (absPitch > 15 || absRoll > 15) {
+        status = 'danger';
+        badCountSecs += 0.2;
+      } else if (absPitch > 10 || absRoll > 10) {
+        status = 'warn';
+      }
+
+      // Update Gauge, Avatar, Chart
+      levelGauge.update(pitch, roll, status);
+      postureAvatar.update(pitch, roll, status);
+      chartCard.pushData(pitch, roll);
+
+      // Score Calculation
+      const score = Math.max(0, 100 - (badCountSecs * 2.5) - (absPitch * 0.8));
+      scoreCard.update(score, status === 'danger' ? '🚨 허리를 펴고 목을 곧게 세우세요!' : '올바른 척추 각도를 유지 중입니다.');
+
+      // Screen Alert Pulse when danger is sustained
+      if (status === 'danger') {
+        document.body.classList.add('alert-active');
+      } else {
+        document.body.classList.remove('alert-active');
+      }
+    }
+
+    // Manual Slider Event Bindings
+    const pitchSlider = document.getElementById('slider-pitch');
+    const rollSlider = document.getElementById('slider-roll');
+    const pitchValLabel = document.getElementById('slider-pitch-val');
+    const rollValLabel = document.getElementById('slider-roll-val');
+
+    function onSliderChange() {
+      currentPitch = parseFloat(pitchSlider.value);
+      currentRoll = parseFloat(rollSlider.value);
+      pitchValLabel.textContent = `${currentPitch >= 0 ? '+' : ''}${currentPitch.toFixed(1)}°`;
+      rollValLabel.textContent = `${currentRoll >= 0 ? '+' : ''}${currentRoll.toFixed(1)}°`;
+      updateAllComponents(currentPitch, currentRoll);
+    }
+
+    pitchSlider.addEventListener('input', onSliderChange);
+    rollSlider.addEventListener('input', onSliderChange);
+
+    // Preset Button Handlers
+    document.getElementById('btn-preset-good').addEventListener('click', () => {
+      pitchSlider.value = 3;
+      rollSlider.value = -1;
+      onSliderChange();
+    });
+
+    document.getElementById('btn-preset-warn').addEventListener('click', () => {
+      pitchSlider.value = 12;
+      rollSlider.value = 4;
+      onSliderChange();
+    });
+
+    document.getElementById('btn-preset-danger').addEventListener('click', () => {
+      pitchSlider.value = 22;
+      rollSlider.value = -8;
+      onSliderChange();
+    });
+
+    // Auto start simulation on load for instant demo display
+    serialManager.startSimulation();
+  </script>
+</body>
+</html>

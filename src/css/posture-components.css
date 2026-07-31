@@ -1,0 +1,403 @@
+/* ==========================================================================
+   IoT Posture Coach - Reusable Component Styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. HeaderNav Component
+   -------------------------------------------------------------------------- */
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-glass);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-md);
+  background: linear-gradient(135deg, var(--cyan-accent), var(--indigo-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 40%, var(--cyan-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.serial-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-dim);
+}
+
+.status-dot.connected {
+  background: var(--status-good);
+  box-shadow: 0 0 10px var(--status-good);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* --------------------------------------------------------------------------
+   2. SensorLevelGauge Component (2D Target Bubble)
+   -------------------------------------------------------------------------- */
+.sensor-gauge-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.radar-target-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.6) 100%);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.target-crosshair-h, .target-crosshair-v {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.target-crosshair-h { width: 100%; height: 1px; }
+.target-crosshair-v { height: 100%; width: 1px; }
+
+.target-safe-zone {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.sensor-bubble {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--status-good);
+  box-shadow: var(--status-good-glow);
+  transition: transform 0.15s ease-out, background-color 0.2s;
+  top: calc(50% - 12px);
+  left: calc(50% - 12px);
+  transform: translate(0, 0);
+}
+
+.sensor-bubble.warn {
+  background: var(--status-warn);
+  box-shadow: var(--status-warn-glow);
+}
+
+.sensor-bubble.danger {
+  background: var(--status-danger);
+  box-shadow: var(--status-danger-glow);
+}
+
+.angle-readout-row {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
+.angle-badge {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
+  flex: 1;
+}
+
+.angle-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.angle-val {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   3. PostureAvatar Component
+   -------------------------------------------------------------------------- */
+.avatar-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 160px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.avatar-svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: bottom center;
+}
+
+.avatar-halo {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 2px solid var(--status-good);
+  box-shadow: var(--status-good-glow);
+  opacity: 0.6;
+  transition: var(--transition-normal);
+}
+
+.avatar-halo.warn {
+  border-color: var(--status-warn);
+  box-shadow: var(--status-warn-glow);
+}
+
+.avatar-halo.danger {
+  border-color: var(--status-danger);
+  box-shadow: var(--status-danger-glow);
+  animation: pulseHalo 1s infinite alternate;
+}
+
+@keyframes pulseHalo {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.08); opacity: 0.9; }
+}
+
+/* --------------------------------------------------------------------------
+   4. PostureScoreCard & Status Badge
+   -------------------------------------------------------------------------- */
+.score-ring-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem auto;
+}
+
+.score-ring-svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.score-ring-bg {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 8;
+  fill: none;
+}
+
+.score-ring-progress {
+  stroke: var(--status-good);
+  stroke-width: 8;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 376;
+  stroke-dashoffset: 37; /* ~90% */
+  transition: stroke-dashoffset 0.6s ease, stroke 0.4s;
+}
+
+.score-text-overlay {
+  position: absolute;
+  text-align: center;
+}
+
+.score-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.score-unit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.status-badge.good {
+  background: var(--status-good-bg);
+  color: var(--status-good);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.warn {
+  background: var(--status-warn-bg);
+  color: var(--status-warn);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-badge.danger {
+  background: var(--status-danger-bg);
+  color: var(--status-danger);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  animation: badgeGlow 1s infinite alternate;
+}
+
+@keyframes badgeGlow {
+  0% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
+  100% { box-shadow: 0 0 18px rgba(239, 68, 68, 0.8); }
+}
+
+/* --------------------------------------------------------------------------
+   5. ChartCard & Badges List
+   -------------------------------------------------------------------------- */
+.chart-container-box {
+  width: 100%;
+  height: 220px;
+  position: relative;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.badge-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--border-radius-md);
+  padding: 0.85rem;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.badge-item.achieved {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.badge-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.badge-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   6. StretchingModal Component
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-modal);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content-card {
+  width: 90%;
+  max-width: 520px;
+  background: rgba(30, 41, 59, 0.95);
+  border: 1px solid var(--border-glass-light);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transform: translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.active .modal-content-card {
+  transform: translateY(0);
+}
+
+.stretch-timer-countdown {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--cyan-accent);
+  margin: 1rem 0;
+}

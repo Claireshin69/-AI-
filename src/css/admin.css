@@ -1,0 +1,193 @@
+/* 맘별AI 자기이해 미니리포트 - 관리자 페이지 레이아웃 및 컴포넌트 스타일 */
+
+.admin-header-card {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAF6F0 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 28px 36px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.admin-title-group h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-navy);
+  margin-bottom: 4px;
+}
+
+.admin-title-group p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.admin-nav-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--color-mint);
+  background: var(--color-mint-light);
+}
+
+.tab-btn.active {
+  background: var(--color-mint);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(59, 156, 135, 0.2);
+}
+
+/* 질문 Q1 ~ Q12 탐색 칩 세트 */
+.question-selector-bar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  scrollbar-width: thin;
+}
+
+.q-chip {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  color: var(--text-navy);
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.q-chip:hover {
+  border-color: var(--color-mint);
+  color: var(--color-mint);
+}
+
+.q-chip.active {
+  background: var(--color-mint-light);
+  border-color: var(--color-mint);
+  color: var(--color-mint);
+  box-shadow: 0 2px 8px rgba(59, 156, 135, 0.15);
+}
+
+/* 선택지 편집기 행 카드 */
+.option-editor-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(27, 42, 74, 0.03);
+  position: relative;
+}
+
+.option-editor-card:hover {
+  border-color: rgba(59, 156, 135, 0.3);
+}
+
+.option-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.option-editor-num {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--color-mint);
+  background: var(--color-mint-light);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.btn-danger-sm {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FCA5A5;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger-sm:hover {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+/* 4원소 가중치 입력 행 */
+.element-scores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+  background: var(--bg-cream);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.element-score-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.element-score-field label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-navy);
+}
+
+.element-score-field input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-navy);
+  background: #FFFFFF;
+}
+
+/* 상단 관리자 로그인 모달 */
+.admin-modal-box {
+  max-width: 440px;
+}
+
+.admin-badge-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-mint-light);
+  color: var(--color-mint);
+  border: 1px solid var(--color-mint);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}

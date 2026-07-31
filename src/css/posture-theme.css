@@ -1,0 +1,168 @@
+/* ==========================================================================
+   IoT Posture Coach - Design Tokens & Core Theme
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Surface & Background */
+  --bg-app: #0F172A;
+  --bg-card: rgba(30, 41, 59, 0.75);
+  --bg-card-hover: rgba(51, 65, 85, 0.85);
+  --bg-modal: rgba(15, 23, 42, 0.92);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-light: rgba(255, 255, 255, 0.2);
+
+  /* Status Colors */
+  --status-good: #10B981;
+  --status-good-bg: rgba(16, 185, 129, 0.15);
+  --status-good-glow: 0 0 16px rgba(16, 185, 129, 0.4);
+
+  --status-warn: #F59E0B;
+  --status-warn-bg: rgba(245, 158, 11, 0.15);
+  --status-warn-glow: 0 0 16px rgba(245, 158, 11, 0.4);
+
+  --status-danger: #EF4444;
+  --status-danger-bg: rgba(239, 68, 68, 0.2);
+  --status-danger-glow: 0 0 24px rgba(239, 68, 68, 0.6);
+
+  /* Accents & Brand */
+  --cyan-accent: #06B6D4;
+  --indigo-accent: #6366F1;
+  --violet-accent: #8B5CF6;
+
+  /* Text Colors */
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-dim: #64748B;
+
+  /* Fonts */
+  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-num: 'Outfit', 'Roboto Mono', monospace;
+
+  /* Transitions & Shadows */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --border-radius-lg: 16px;
+  --border-radius-md: 12px;
+  --border-radius-sm: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(99, 102, 241, 0.08) 0%, transparent 45%);
+  background-attachment: fixed;
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--glass-shadow);
+  padding: 1.5rem;
+  transition: var(--transition-normal);
+}
+
+.glass-card:hover {
+  border-color: var(--border-glass-light);
+}
+
+/* Alert Screen Border Pulse */
+body.alert-active {
+  animation: alertBorderPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes alertBorderPulse {
+  0% { box-shadow: inset 0 0 0px 0px rgba(239, 68, 68, 0); }
+  50% { box-shadow: inset 0 0 40px 10px rgba(239, 68, 68, 0.75); }
+  100% { box-shadow: inset 0 0 0px 0px rgba(239, 68, 68, 0); }
+}
+
+/* Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.col-12 { grid-column: span 12; }
+.col-8  { grid-column: span 8; }
+.col-6  { grid-column: span 6; }
+.col-4  { grid-column: span 4; }
+.col-3  { grid-column: span 3; }
+
+@media (max-width: 1024px) {
+  .col-8, .col-6, .col-4, .col-3 { grid-column: span 12; }
+}
+
+/* Common Typography & Buttons */
+.num-font {
+  font-family: var(--font-num);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan-accent), var(--indigo-accent));
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--border-glass);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--border-glass-light);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--status-danger);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.35);
+}
